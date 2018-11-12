@@ -1,0 +1,58 @@
+stages:
+   - mavenbuild
+   - maventest
+   - autodeploy
+   - androidbuild
+   - androidtest
+maven-build:
+   stage: mavenbuild
+   tags:
+     - shell
+   script:
+     - cd Spring
+     - mvn package -B
+   maven-test:
+     stage: maventest
+     tags:
+       - shell
+     script:
+       - cd Spring
+       - mvn test
+     artifacts:
+     paths:
+       - Spring/target/*.jar
+autoDeploy:
+   stage: autodeploy
+   tags:
+     - shell
+   script:
+     - cd Spring
+     - mvn package
+     - sudo mv target/*.jar /target/web-demo.jar
+     - sudo systemctl stop systemd-web-demo
+     - sudo systemctl start systemd-web-demo
+android-build:
+   image: javiersantos/android-ci:latest
+   stage: androidbuild
+   before_script:
+     - export GRADLE_USER_HOME=`pwd`/.gradle
+     - chmod +x ./Android_test/gradlew
+   tags:
+     - android_tag1
+   script:
+     - cd Android_test
+     - ./gradlew assemble
+   artifacts:
+   paths:
+     - Android_test/app/build/outputs/
+unitTests:
+   image: javiersantos/android-ci:latest
+   stage: androidtest
+   before_script:
+     - export GRADLE_USER_HOME=`pwd`/.gradle
+     - chmod +x ./Android_test/gradlew
+   tags:
+     - android_tag1
+   script:
+     - cd Android_test
+     - ./gradlew test
