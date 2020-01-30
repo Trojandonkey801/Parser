@@ -11,6 +11,7 @@ void* load(void *input){
 		}
 	std::cout << array_to_add[i] << std::endl;
 	}
+	return NULL;
 }
 pthread_t *e,*f,*g,*h;
 int main(int argc, char *argv[])
