@@ -1,6 +1,7 @@
 #include<pthread.h>
 #include<semaphore.h>
 #include<iostream>
+using namespace std;
 sem_t a,b,c,d;
 void* load(void *input){
 	int array_to_add[20000];
@@ -16,6 +17,7 @@ void* load(void *input){
 pthread_t *e,*f,*g,*h;
 int main(int argc, char *argv[])
 {
+	cout << "aasdfads" << endl;
 	pthread_create(e,NULL,load,NULL);
 	pthread_create(f,NULL,load,NULL);
 	pthread_create(g,NULL,load,NULL);
