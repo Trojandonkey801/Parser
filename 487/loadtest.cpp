@@ -1,38 +1,30 @@
 #include <iostream>
-#include <thread>
+#include <vector>
+#include <time.h>
 using namespace std;
-
-void func_dummy(int N)
- {
-   for (int i = 0; i < N; i++) {
-   cout << "Thread 1 :: callable => function pointer\n";
-   }
- }
- 
-class thread_obj {
- public:
-   void operator()(int n) {
-       for (int i = 0; i < n; i++)
-           cout << "Thread 2 :: callable => function object\n";
-   }
-};
- 
-int main()
+int main(int argc, char* argv[])
 {
-auto f = [](int n) {
-   for (int i = 0; i < n; i++)
-   cout << "Thread 3 :: callable => lambda expression\n";
-   };
-thread th1(func_dummy, 2);
- 
-thread th2(thread_obj(), 2);
- 
-thread th3(f, 2);
- 
- th1.join();
-th2.join();
- 
-th3.join();
- 
-return 0;
-}
+   const int NUM_ELEMENTS = 5000000;
+   int clicks, lc, curr;
+   float secs;
+   vector<int> vec;
+   auto t1 = std::chrono::high_resolution_clock::now();
+
+   // Push values to vector
+   for(lc = 0; lc < NUM_ELEMENTS; lc++)
+   {
+      vec.push_back(lc);
+   } // for
+
+   // Access and assignment (using [] operator)
+   for(lc = 0; lc < NUM_ELEMENTS; lc++)
+   {
+      curr = vec[lc];
+   } // for
+
+   clicks = clock();
+   secs   = ((float)clicks)/CLOCKS_PER_SEC;
+   auto t2 = std::chrono::high_resolution_clock::now();
+   cout << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << endl;
+   return 0;
+} // main 
