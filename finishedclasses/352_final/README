@@ -1,0 +1,9 @@
+This program conforms to the specs of Programming Assignment 2 for COM S 352.
+In order to compile the program, all you have to do is:
+make
+In order to execute the program, call
+./redblack <yourfilename>
+The results of the program are as follow:
+The rsults of the "search" operation, along with the thread id
+The time it took to run the program. 
+
